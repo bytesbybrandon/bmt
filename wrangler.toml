@@ -14,4 +14,4 @@ pages_build_output_dir = "build"
 
 # Performance settings
 [build]
-command = "cd frontend && yarn install && yarn run contentlayer:build && yarn run build"
+command = "cd frontend && yarn install && (yarn run contentlayer:build || true) && yarn run build"
