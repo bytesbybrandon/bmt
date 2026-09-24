@@ -14,9 +14,12 @@ import ProjectsView from "@/components/views/ProjectsView";
 import TimelineView from "@/components/views/TimelineView";
 import SkillsView from "@/components/views/SkillsView";
 import ContactView from "@/components/views/ContactView";
+import BlogView from "@/components/views/BlogView";
+import BlogPostView from "@/components/views/BlogPostView";
 
 function App() {
   const [view, setView] = useState("home");
+  const [viewParams, setViewParams] = useState(null);
   const [homeVisits, setHomeVisits] = useState(0);
   const lenisRef = useRef(null);
 
@@ -49,9 +52,10 @@ function App() {
     return () => window.removeEventListener("pointerdown", arm);
   }, []);
 
-  const navigate = (v) => {
+  const navigate = (v, params = null) => {
     if (v === "home") setHomeVisits((n) => n + 1);
     setView(v);
+    setViewParams(params);
     window.scrollTo(0, 0);
     lenisRef.current?.scrollTo(0, { immediate: true });
   };
@@ -74,6 +78,8 @@ function App() {
         {view === "timeline" && <TimelineView key="timeline" onBack={back} />}
         {view === "skills" && <SkillsView key="skills" onBack={back} />}
         {view === "contact" && <ContactView key="contact" onBack={back} />}
+        {view === "blog" && <BlogView key="blog" onBack={back} />}
+        {view === "blog-post" && <BlogPostView key={`blog-post-${viewParams?.slug}`} params={viewParams} />}
       </AnimatePresence>
     </div>
   );

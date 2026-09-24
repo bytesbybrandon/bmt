@@ -11,6 +11,10 @@
 # production
 /build
 
+# contentlayer
+/.contentlayer
+/contentlayer.generated
+
 # misc
 .DS_Store
 .env.local

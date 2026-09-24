@@ -1,0 +1,17 @@
+name = "brandonmakesthings"
+compatibility_date = "2024-09-23"
+pages_build_output_dir = "build"
+
+[env.production]
+# Production environment variables (set in Cloudflare dashboard)
+# CF_PAGES_BRANCH = "main"
+
+# Optional: Custom domain configuration
+# routes = [
+#   { pattern = "brandonmakesthings.com/*", zone_name = "brandonmakesthings.com" },
+#   { pattern = "www.brandonmakesthings.com/*", zone_name = "brandonmakesthings.com" },
+# ]
+
+# Performance settings
+[build]
+command = "cd frontend && yarn install && yarn run contentlayer:build && yarn run build"

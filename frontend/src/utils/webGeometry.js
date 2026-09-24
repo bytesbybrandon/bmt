@@ -21,6 +21,7 @@ export const DROPS = [
   { id: "timeline", label: "Timeline", angle: 35, dist: 0.5 },
   { id: "skills", label: "Skills", angle: 140, dist: 0.46 },
   { id: "contact", label: "Contact", angle: -90, dist: 0.38 },
+  { id: "blog", label: "Blog", angle: 90, dist: 0.44 },
 ];
 
 export function dropletPosition(metrics, angleDeg, frac) {

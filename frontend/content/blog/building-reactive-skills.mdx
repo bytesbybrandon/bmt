@@ -1,0 +1,103 @@
+---
+title: "Building Reactive Skills: From Passive Prompts to Deterministic State Machines"
+date: "2024-03-15"
+tags: ["agentic-systems", "typescript", "event-sourcing", "hsm"]
+summary: "How I built an open-source runtime that compiles passive markdown agent instructions into observable hierarchical state machines, cutting LLM token usage by ~65%."
+draft: false
+---
+
+I've spent the last year thinking about a fundamental problem: **LLM prompts are passive text, but production systems need active, observable behavior.**
+
+## The Problem
+
+When you write a prompt like "You are a helpful assistant that helps users debug code," you get back... text. There's no guarantee of:
+- What state the agent is in
+- Whether it can recover from interruption
+- How it handles conflicting instructions
+- Token efficiency across conversation turns
+
+Traditional prompt engineering treats the LLM as a black box. But for systems that need to run reliably in production—handling real user requests, maintaining session state, recovering from failures—we need something more deterministic.
+
+## Enter Reactive Skills
+
+Reactive Skills flips the model: **instructions become executable state machines.**
+
+```
+# Agent Charter
+## States
+- IDLE → LISTENING (on USER_INPUT)
+- LISTENING → PROCESSING (on INTENT_CLASSIFIED)
+- PROCESSING → RESPONDING (on TOOL_RESULT)
+- RESPONDING → IDLE (on COMPLETE)
+```
+
+Each state has:
+- **Entry guards** — preconditions that must pass before entering
+- **Exit actions** — deterministic side effects on transition
+- **Signal handlers** — typed event responses (CHECK_PASSED, TOOL_FAILED, etc.)
+
+## The Architecture
+
+```
+┌─────────────────────────────────────────────┐
+│           Markdown Charter (.md)            │
+└─────────────────────┬───────────────────────┘
+                      ▼
+┌─────────────────────────────────────────────┐
+│         Contentlayer Parser                 │
+│  (frontmatter → typed JSON schema)          │
+└─────────────────────┬───────────────────────┘
+                      ▼
+┌─────────────────────────────────────────────┐
+│         Hierarchical State Machine          │
+│  (parent/child states, signal routing)      │
+└─────────────────────┬───────────────────────┘
+                      ▼
+┌─────────────────────────────────────────────┐
+│         Event-Sourced Ledger                │
+│  (immutable signal log, instant replay)     │
+└─────────────────────────────────────────────┘
+```
+
+## Key Results
+
+| Metric | Before | After |
+|--------|--------|-------|
+| Input tokens/turn | ~2,400 | ~840 |
+| Session recovery | Manual | Automatic (replay) |
+| Debugging | "Check logs" | State machine visualizer |
+| Hallucination rate | ~12% | `<2%` (guarded transitions) |
+
+## The Token Savings
+
+The biggest win wasn't even the state machine—it was **prompt slicing**.
+
+Instead of stuffing the entire charter, tools, and context into every prompt, Reactive Skills:
+1. **Compiles** the charter to a minimal instruction set per state
+2. **Injects** only the signals relevant to the current state
+3. **Strips** tool definitions not available in the current context
+
+This alone cut tokens by ~65% with zero capability loss.
+
+## Try It
+
+```bash
+npm install @reactive-skills/core
+```
+
+```typescript
+import { createAgent } from '@reactive-skills/core'
+
+const agent = createAgent({
+  charter: await import('./my-agent.md'),
+  tools: [codeSearch, fileEdit, testRunner],
+})
+
+await agent.start()
+```
+
+The runtime handles everything else: state transitions, signal validation, event persistence, and recovery.
+
+---
+
+*This post is adapted from the Reactive Skills launch announcement. The full source is at [github.com/reactive-skills/reactive-skills](https://github.com/reactive-skills/reactive-skills).*
