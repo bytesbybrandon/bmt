@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { compile } from "@mdx-js/mdx";
 import { MDXProvider } from "@mdx-js/react";
 
 const components = {
@@ -24,20 +25,43 @@ const components = {
   tbody: (props) => <tbody {...props} />,
 };
 
-export function MDXRenderer({ code }) {
-  const Component = useMemo(() => {
-    if (!code) return null;
-    try {
-      const fn = new Function("React", "return " + code)();
-      return fn.default || fn;
-    } catch (e) {
-      console.error("MDX render error:", e);
-      return null;
-    }
-  }, [code]);
+export function MDXRenderer({ raw }) {
+  const [Component, setComponent] = useState(null);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (!raw) return;
+    let mounted = true;
+
+    compile(raw, {
+      jsx: true,
+      jsxImportSource: "react",
+      providerImportSource: "@mdx-js/react",
+    })
+      .then((result) => {
+        if (mounted) {
+          try {
+            const fn = new Function("React", "return " + String(result))();
+            setComponent(fn.default || fn);
+          } catch (e) {
+            setError(e);
+          }
+        }
+      })
+      .catch((e) => {
+        if (mounted) setError(e);
+      });
+
+    return () => { mounted = false; };
+  }, [raw]);
+
+  if (error) {
+    console.error("MDX compile error:", error);
+    return <div className="text-neutral-500">Failed to render content</div>;
+  }
 
   if (!Component) {
-    return <div className="text-neutral-500">Failed to render content</div>;
+    return <div className="text-neutral-500 animate-pulse">Rendering...</div>;
   }
 
   return (
