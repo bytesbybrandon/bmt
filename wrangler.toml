@@ -11,7 +11,3 @@ pages_build_output_dir = "frontend/build"
 #   { pattern = "brandonmakesthings.com/*", zone_name = "brandonmakesthings.com" },
 #   { pattern = "www.brandonmakesthings.com/*", zone_name = "brandonmakesthings.com" },
 # ]
-
-# Performance settings
-[build]
-command = "cd frontend && yarn install && (yarn run contentlayer:build || true) && yarn run build"
