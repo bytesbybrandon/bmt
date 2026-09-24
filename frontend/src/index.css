@@ -1,0 +1,185 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@200;300;400;500&family=JetBrains+Mono:wght@200;300;400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --background: 216 33% 3%;
+        --foreground: 213 27% 92%;
+        --card: 220 22% 6%;
+        --card-foreground: 213 27% 92%;
+        --popover: 220 22% 6%;
+        --popover-foreground: 213 27% 92%;
+        --primary: 33 65% 64%;
+        --primary-foreground: 24 40% 10%;
+        --secondary: 220 16% 12%;
+        --secondary-foreground: 213 27% 92%;
+        --muted: 220 16% 12%;
+        --muted-foreground: 217 12% 60%;
+        --accent: 220 16% 14%;
+        --accent-foreground: 213 27% 92%;
+        --destructive: 0 62.8% 30.6%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 220 14% 14%;
+        --input: 220 14% 14%;
+        --ring: 33 65% 64%;
+        --radius: 0.5rem;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+    html {
+        background-color: #050709;
+    }
+    body {
+        @apply text-foreground;
+        margin: 0;
+        background-color: #050709;
+        font-family: 'IBM Plex Sans', -apple-system, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+    }
+}
+
+.font-display {
+    font-family: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+}
+
+.font-mono {
+    font-family: 'JetBrains Mono', 'SF Mono', monospace;
+}
+
+::selection {
+    background: rgba(244, 162, 97, 0.28);
+    color: #ffffff;
+}
+
+::-webkit-scrollbar {
+    width: 6px;
+}
+::-webkit-scrollbar-track {
+    background: #050709;
+}
+::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(244, 162, 97, 0.4);
+}
+
+@media (pointer: fine) {
+    body, body * {
+        cursor: none !important;
+    }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+
+    [data-debug-wrapper="true"] > * {
+        margin-left: inherit;
+        margin-right: inherit;
+        margin-top: inherit;
+        margin-bottom: inherit;
+        padding-left: inherit;
+        padding-right: inherit;
+        padding-top: inherit;
+        padding-bottom: inherit;
+        column-gap: inherit;
+        row-gap: inherit;
+        gap: inherit;
+        border-left-width: inherit;
+        border-right-width: inherit;
+        border-top-width: inherit;
+        border-bottom-width: inherit;
+        border-left-style: inherit;
+        border-right-style: inherit;
+        border-top-style: inherit;
+        border-bottom-style: inherit;
+        border-left-color: inherit;
+        border-right-color: inherit;
+        border-top-color: inherit;
+        border-bottom-color: inherit;
+    }
+}
+
+/* Silk strand theming */
+:root {
+    --silk-a: rgba(165, 230, 255, 0.5);
+    --silk-b: rgba(244, 162, 97, 0.65);
+    --silk-cocoon: rgba(230, 242, 255, 0.55);
+}
+[data-theme="day"] {
+    --silk-a: rgba(60, 75, 100, 0.55);
+    --silk-b: rgba(150, 92, 24, 0.6);
+    --silk-cocoon: rgba(60, 75, 100, 0.6);
+}
+
+/* Day theme palette flip */
+body {
+    transition: background-color 1.2s ease;
+}
+[data-theme="day"] .text-neutral-100 { color: #1b1f26; }
+[data-theme="day"] .text-neutral-200 { color: #23282f; }
+[data-theme="day"] .text-neutral-300 { color: #31373f; }
+[data-theme="day"] .text-neutral-400 { color: #3f4650; }
+[data-theme="day"] .text-neutral-500 { color: #4e5560; }
+[data-theme="day"] .text-neutral-600 { color: #565d68; }
+
+/* Visible keyboard focus (WCAG 2.2 focus appearance) */
+:focus-visible {
+    outline: 1.5px solid rgba(244, 178, 102, 0.9);
+    outline-offset: 3px;
+    border-radius: 2px;
+}
+[data-theme="day"] :focus-visible {
+    outline-color: #7d4d12;
+}
+[data-theme="day"] .text-white { color: #14181e; }
+[data-theme="day"] .border-white\/10 { border-color: rgba(20, 24, 30, 0.14); }
+[data-theme="day"] .border-white\/25 { border-color: rgba(20, 24, 30, 0.3); }
+[data-theme="day"] .bg-white\/10 { background-color: rgba(20, 24, 30, 0.12); }
+[data-theme="day"] .bg-\[\#050709\] { background-color: #e9e4d8; }
+[data-theme="day"] .bg-white\/\[0\.07\] { background-color: rgba(20, 24, 30, 0.1); }
+[data-theme="day"] .hover\:bg-white\/\[0\.02\]:hover { background-color: rgba(20, 24, 30, 0.05); }
+[data-theme="day"] .bg-amber-200\/5 { background-color: rgba(150, 92, 24, 0.08); }
+[data-theme="day"] .bg-amber-200\/10:hover { background-color: rgba(150, 92, 24, 0.14); }
+[data-theme="day"] .text-amber-100 { color: #6e430e; }
+[data-theme="day"] .text-amber-200 { color: #7d4d12; }
+[data-theme="day"] .text-amber-200\/70 { color: #7d4d12; }
+[data-theme="day"] .text-amber-200\/80 { color: #7d4d12; }
+[data-theme="day"] .text-amber-200\/60 { color: #7d4d12; }
+[data-theme="day"] .text-amber-200\/50 { color: #8a5416; }
+[data-theme="day"] .text-amber-300\/80 { color: #6e430e; }
+[data-theme="day"] .border-amber-200\/50 { border-color: rgba(140, 86, 20, 0.55); }
+[data-theme="day"] .bg-amber-100 { background-color: #7d4d12; }
+[data-theme="day"] .border-white\/40 { border-color: rgba(20, 24, 30, 0.5); }
+[data-theme="day"] .silk-gauge-track { background: rgba(20, 24, 30, 0.14); }
+[data-theme="day"] .portrait-frame::before { border-color: rgba(20, 24, 30, 0.25); }
+[data-theme="day"] .portrait-frame::after {
+    background: radial-gradient(90% 70% at 30% 15%, rgba(255, 250, 235, 0.25), transparent 60%);
+}
+[data-theme="day"] .droplet {
+    background: radial-gradient(circle at 32% 26%, rgba(255, 255, 255, 0.95) 0%, rgba(230, 240, 255, 0.5) 10%, rgba(140, 160, 190, 0.22) 34%, rgba(80, 95, 120, 0.16) 58%, rgba(50, 60, 80, 0.1) 100%);
+    box-shadow: 0 1px 8px rgba(40, 50, 70, 0.3), inset 0 0 6px rgba(255, 255, 255, 0.5);
+}
+[data-theme="day"] .droplet-aura {
+    animation-name: aura-pulse-day;
+}
+@keyframes aura-pulse-day {
+    0%, 100% { filter: brightness(1); }
+    50% { filter: brightness(1.12); }
+}
+[data-theme="day"] .text-neutral-400,
+[data-theme="day"] .text-neutral-500,
+[data-theme="day"] .text-neutral-600 { text-shadow: 0 1px 10px rgba(255, 252, 244, 0.65); }
+[data-theme="day"] .grain-overlay { opacity: 0.035; }

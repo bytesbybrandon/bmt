@@ -1,0 +1,197 @@
+{
+  "project_meta": {
+    "name": "Brandon D. Phillips Portfolio — The Weaver's Sanctum",
+    "persona": "E1: Anti-AI Creative Designer",
+    "target_award_level": "Awwwards Site of the Day / FWA of the Day standard",
+    "theme": "Atmospheric Nocturnal (Deep Obsidian, Moonlit Bioluminescent Silver, Amber Chitin Sheen)",
+    "aesthetic_fusion": [
+      "Nocturnal Arachnid Entomology (Macrophotography of Neoscona crucifera / Golden Silk Orb-Weaver)",
+      "Bioluminescent Dewdrop Physics (Optical refraction, liquid tension, chromatic fringe)",
+      "High-Precision Editorial Typography (Editorial Display Serif paired with Sterile Technical Monospace)"
+    ]
+  },
+  "UNIVERSAL GUIDELINES FOR MAIN AGENT": [
+    "You tend to converge toward generic, 'on distribution' outputs. In frontend design, this creates what users call the 'AI slop' aesthetic. Avoid this: make creative, distinctive frontends that surprise and delight.",
+    "Dark colors look good when used independently without gradients. DO NOT use dark colors as gradients. Avoid purple-gradient AI slop.",
+    "Don't make generic centered layouts, simplistic gradients, and uniform styling.",
+    "Create depth through layered design elements with z-index hierarchy: Base night canvas (z-0) -> Procedural web canvas & strands (z-10) -> Ambient particle dust & mist (z-15) -> Photoreal SVG/Canvas Orb Weaver entity (z-20) -> Dewdrop navigation nodes (z-30) -> Cinematic overlay / Page panels (z-40) -> HUD & Audio/Status controllers (z-50).",
+    "Use glass-morphism effects with backdrop filters (12-24px blur). Optical clarity with subtle border-white/10 and high dark contrast.",
+    "You MUST NOT apply universal transition (e.g., 'transition: all'). This breaks transforms and framer-motion animations. Specify individual transitions (e.g., 'transition: color 0.3s ease, border-color 0.3s ease').",
+    "You MUST NOT center align the app container, i.e., do not add '.App { text-align: center; }' in CSS. This disrupts human natural reading flow.",
+    "Always use modern button styles like pill-shaped, or crisp geometric button with interaction animations & color relevant to the app style.",
+    "NEVER use AI assistant emoji characters like 🤖🧠💭💡🔮🎯 etc. for icons. Use lucide-react or clean SVG glyphs.",
+    "Every interaction needs micro-animations: hover states, transitions, parallax effects, and entrance animations. Static = dead.",
+    "Use 2-3x more spacing than feels comfortable. Containers with border must have padding on text content (p-6, p-8, p-12).",
+    "Subtle grain textures, noise overlays, custom spider-reticle cursor, selection states, and dew shimmer elevate this into an Awwwards winner.",
+    "CRITICAL: DO NOT use complete transparent background in header, overlays, or surfaces with content underneath.",
+    "All interactive and key informational elements MUST include a data-testid attribute in kebab-case (e.g., data-testid='nav-droplet-about', data-testid='timeline-item-0')."
+  ],
+  "typography": {
+    "pairing_philosophy": "The 'Old Money Tech / Entomological Editorial' archetype: Dramatic, razor-sharp classical Serif for titular impact and mythic tone, juxtaposed against high-legibility crisp Sans and austere Monospace for system engineering credentials.",
+    "fonts": {
+      "headline": "Playfair Display, Cormorant Garamond, Georgia, serif",
+      "body": "IBM Plex Sans, Plus Jakarta Sans, -apple-system, sans-serif",
+      "mono": "JetBrains Mono, SF Mono, Courier New, monospace"
+    },
+    "hierarchy_rules": {
+      "h1_hero": "text-4xl sm:text-5xl lg:text-6xl font-light tracking-tight leading-none text-neutral-100",
+      "h2_section": "text-2xl sm:text-3xl lg:text-4xl font-normal tracking-tight text-neutral-100",
+      "h3_sub": "text-xl sm:text-2xl font-light text-neutral-200",
+      "h4_card": "text-lg sm:text-xl font-medium text-neutral-200",
+      "body_text": "text-sm sm:text-base font-light text-neutral-400 leading-relaxed",
+      "eyebrow_label": "text-xs font-mono uppercase tracking-[0.25em] text-amber-300/80",
+      "stat_number": "text-3xl sm:text-4xl font-mono font-light text-neutral-100"
+    },
+    "text_contrast_safety": "All text must pass WCAG AA (at least 4.5:1 ratio against the dark background #07090D). Body text should never be darker than #94A3B8 on dark surfaces."
+  },
+  "colors": {
+    "palette_name": "Nocturnal Silken Amber (Archetype 5: Luxury & Organic Nature)",
+    "forbidden_colors": ["#7351B7", "generic cyan-purple gradients", "bootstrap blue"],
+    "tokens": {
+      "background_void": "#050709",
+      "background_surface": "#0C0F14",
+      "background_elevated": "#141820",
+      "silk_thread": "rgba(230, 241, 255, 0.22)",
+      "silk_highlight": "rgba(255, 255, 255, 0.85)",
+      "dewdrop_base": "rgba(180, 220, 255, 0.18)",
+      "dewdrop_glow": "rgba(165, 230, 255, 0.45)",
+      "chitin_amber": "#D4A373",
+      "chitin_dark": "#2B1E16",
+      "chitin_accent": "#F4A261",
+      "moonlit_silver": "#E2E8F0",
+      "text_muted": "#8A94A6",
+      "border_delicate": "rgba(255, 255, 255, 0.08)",
+      "border_hover": "rgba(244, 162, 97, 0.4)"
+    }
+  },
+  "visual_enhancers": {
+    "web_canvas": {
+      "description": "Procedural HTML5 Canvas rendering a complex orb-weaver spiral web (24-32 radial lines + 18 logarithmic spiral arcs). Threads possess gentle catenary sag and respond with sinusoidal vibration when cursor moves near.",
+      "thread_physics": "Subtle wind sway (sinusoidal offset with Perlin noise or composite sine waves: speed 0.0015, amplitude 4px). Hovering radial spokes causes resonant string vibration."
+    },
+    "spider_entity": {
+      "description": "Photoreal vector/canvas Orb Weaver spider (Neoscona/Araneus). Distinct anatomy: 2-part body (cephalothorax with 8 glowing ocelli eyes, patterned abdomen with amber/ochre markings, 8 jointed segmented legs with pedipalps).",
+      "cursor_tracking_behavior": "EERIE OCULAR & HEAD TRACKING: Spider remains anchored to the web hub. Cephalothorax tilts subtly towards clientX/clientY (max rotation ±14deg). The 4 front legs perform micro-breathing twitches. Spider does NOT leave the center until a dewdrop is clicked.",
+      "pounce_mechanic": "ON DROPLET CLICK: The spider snaps into high-velocity predatory lunge toward the clicked droplet node (320ms spring physics, rapid leg stepping, web strand tension jolt). After striking the droplet, droplet bursts with radiant rippling light, triggering the full-screen cinematic transition into the target page."
+    },
+    "dewdrops_navigation": {
+      "description": "Glimmering water droplets suspended on specific spiral junctions of the web.",
+      "items": [
+        { "id": "about", "label": "About Brandon", "angle": -135, "distance": 0.48, "coord_hint": "Top Left quadrant" },
+        { "id": "projects", "label": "Selected Work", "angle": -45, "distance": 0.52, "coord_hint": "Top Right quadrant" },
+        { "id": "timeline", "label": "Silk Timeline", "angle": 35, "distance": 0.50, "coord_hint": "Bottom Right quadrant" },
+        { "id": "skills", "label": "Full-Stack Arsenal", "angle": 140, "distance": 0.46, "coord_hint": "Bottom Left quadrant" },
+        { "id": "contact", "label": "Signals & Inquiries", "angle": -90, "distance": 0.38, "coord_hint": "Upper North spoke" }
+      ],
+      "visual_treatment": "Convex glass bead with specular white reflection point, refraction distortion, and pulsating soft cyan-amber aura. On hover, the droplet expands, the label blooms in high-contrast monospaced capital letters, and a silk vibration sound/haptic cue triggers."
+    },
+    "ambient_nocturnal_atmosphere": "Gentle floating moonlit dust motes (canvas particles), subtle vignette border, ambient audio toggle (soothing nocturnal forest night crickets / distant breeze audio synthesized with Web Audio API or gentle sound wave toggle)."
+  },
+  "page_blueprints": {
+    "home": {
+      "title": "The Weaver's Hub",
+      "concept": "Pure full-viewport immersive nocturnal sanctum. Zero scrollbars. Minimal HUD in corners (Brandon D. Phillips / Senior Full-Stack Engineer / 6 Long-Term Tenures / Sound Control / Experience Mode toggle). Glimmering dewdrops acting as the organic spatial menu.",
+      "interaction": "Move mouse to explore cursor tracking of the spider's eyes & leg tension. Click any dewdrop to trigger the predatory strike and page warp."
+    },
+    "about": {
+      "title": "Entomology of an Engineer",
+      "layout": "Editorial split layout. Left: High-contrast framed portrait of Brandon in moody studio lighting + architectural engineer manifesto. Right: 3 Pillars of Craft (Resilience in Architecture, Micro-Optimized Systems, Long-Term Endurance across 6 Enterprises).",
+      "return_control": "Floating silken droplet anchor at top-left: 'Return to Web' with silk thread back to home."
+    },
+    "timeline": {
+      "title": "Descending Silk Timeline",
+      "layout": "Vertical scrollytelling experience. A luminous vertical silk dragline runs down the center/left. As user scrolls, a delicate miniature orb weaver descends down the silk thread, stopping at each of the 6 long-term career milestones.",
+      "employers_6_long_term": [
+        { "company": "Vanguard Distributed Systems", "role": "Principal Systems Architect", "tenure": "2022 - Present", "impact": "Engineered multi-region event mesh handling 120k req/sec with sub-15ms p99 latency." },
+        { "company": "Aether Cloud Infrastructure", "role": "Lead Full-Stack Platform Engineer", "tenure": "2019 - 2022", "impact": "Pioneered real-time observability pipeline and micro-frontend platform adopted across 40+ engineering teams." },
+        { "company": "Syntropic Health Labs", "role": "Senior Full-Stack Engineer", "tenure": "2016 - 2019", "impact": "Architected HIPAA-compliant data exchange platform and clinical analytics dashboard." },
+        { "company": "Nexus Media Networks", "role": "Full-Stack Software Engineer", "tenure": "2013 - 2016", "impact": "Rebuilt legacy content delivery engine into high-concurrency microservices, boosting page speed by 68%." },
+        { "company": "Ironclad FinTech Solutions", "role": "Software Engineer & Security Analyst", "tenure": "2011 - 2013", "impact": "Implemented automated reconciliation algorithms and ledger encryption standards." },
+        { "company": "Helios Interactive Labs", "role": "Junior to Mid Software Engineer", "tenure": "2008 - 2011", "impact": "Developed interactive client telemetry applications and foundational RESTful services." }
+      ],
+      "view_switcher": "Toggle between 'Silk Descent (Chronological Journey)' and 'Compact Executive Dossier (Resume view with downloadable PDF cue)'."
+    },
+    "projects": {
+      "title": "Architectural Works & Artifacts",
+      "layout": "Asymmetric Bento / Editorial Magazine layout. Interactive project cards with deep technical breakdowns (Stack, Architecture Diagram cue, Performance metrics, Live Demo / Repo mocks).",
+      "categories": ["Distributed Engines", "Real-Time Telemetry", "Next-Gen Web Applications"],
+      "interactive_modal": "Clicking a project expands into a high-density architectural case study drawer with system topology and code insights."
+    },
+    "skills": {
+      "title": "The Full-Stack Arsenal",
+      "layout": "High-density technical radar & matrix. Grouped into: Core Languages (TypeScript, Go, Python, Rust), Frontend Mastery (React 19, Next.js, WebGL/Three, Tailwind), Distributed Backend (Node, FastAPI, Kafka, Redis, PostgreSQL), and Cloud & Systems (Docker, K8s, AWS, Terraform, CI/CD).",
+      "visual_meter": "Precision technical gauge bars with silken luminescence instead of childish rounded pill bars."
+    },
+    "contact": {
+      "title": "Signals & Inquiries",
+      "layout": "Nocturnal minimalist terminal & social silk lines. Direct channels: GitHub, LinkedIn, X/Twitter, Email, PGP Key, and a streamlined fast-dispatch message form with Sonner toast feedback.",
+      "aesthetic": "Quiet, confident, no generic corporate form clutter. Clean monospaced credentials."
+    }
+  },
+  "motion_and_transitions": {
+    "framer_motion_variants": {
+      "page_transition": {
+        "initial": { "opacity": 0, "scale": 0.98, "y": 12 },
+        "animate": { "opacity": 1, "scale": 1, "y": 0, "transition": { "duration": 0.5, "ease": [0.16, 1, 0.3, 1] } },
+        "exit": { "opacity": 0, "scale": 1.02, "y": -12, "transition": { "duration": 0.35, "ease": [0.7, 0, 0.84, 0] } }
+      },
+      "pounce_strike": {
+        "transition_spring": { "type": "spring", "stiffness": 420, "damping": 28, "mass": 0.8 }
+      }
+    },
+    "sound_design": "Optional Web Audio API atmospheric tone generator (432Hz deep ambient drone + high-frequency delicate droplet chime on interaction) with a visible, elegant mute toggle."
+  },
+  "component_hierarchy": [
+    "src/components/NightSkyBackground.js (ambient dust, vignette, moonlit glow)",
+    "src/components/SpiderWebCanvas.js (HTML5 procedural web with wind sway & spoke hit-testing)",
+    "src/components/OrbWeaverSpider.js (SVG/Canvas anatomical spider with cursor head-tracking & pounce kinematics)",
+    "src/components/DewdropNav.js (Interactive shimmering dewdrop buttons on web junctions with hover bloom)",
+    "src/components/HudHeader.js (Minimalist branding, sound toggle, breadcrumb status)",
+    "src/components/ReturnDropletButton.js (Floating silken back-to-web navigation button for inner pages)",
+    "src/components/views/AboutView.js (Editorial biography, career philosophy, portrait frame)",
+    "src/components/views/ProjectsView.js (Editorial project showcase with resume view toggle and modal inspection)",
+    "src/components/views/TimelineView.js (Descending spider silk thread career timeline across 6 long-term employers)",
+    "src/components/views/SkillsView.js (High-density technical capability radar & architectural proficiencies)",
+    "src/components/views/ContactView.js (Direct social channels, cryptographic identity, and direct dispatch form)"
+  ],
+  "image_urls": [
+    {
+      "category": "hero_background_texture",
+      "url": "https://images.unsplash.com/photo-1683305292083-871b2667f076?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwzfHxzcGlkZXIlMjB3ZWIlMjBuaWdodCUyMGRldyUyMGRyb3BzfGVufDB8fHx8MTc5MDE3NDYzOXww&ixlib=rb-4.1.0&q=85",
+      "description": "Macro spider web at night with crystalline dew drops - used for subtle ambient background texture overlay at low opacity"
+    },
+    {
+      "category": "photographic_reference_web",
+      "url": "https://images.unsplash.com/photo-1604149370100-2cf3be3bc845?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1NzR8MHwxfHNlYXJjaHwxfHxzcGlkZXIlMjB3ZWIlMjBuaWdodCUyMGRldyUyMGRyb3BzfGVufDB8fHx8MTc5MDE3NDYzOXww&ixlib=rb-4.1.0&q=85",
+      "description": "High contrast spider web monochrome geometry - inspiration for procedural canvas rendering geometry"
+    },
+    {
+      "category": "orb_weaver_anatomical_texture",
+      "url": "https://images.unsplash.com/photo-1544717455-4cf7ad978978?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzh8MHwxfHNlYXJjaHwxfHxvcmIlMjB3ZWF2ZXIlMjBzcGlkZXIlMjBtYWNyb3xlbnwwfHx8fDE3OTAxNzQ2NDZ8MA&ixlib=rb-4.1.0&q=85",
+      "description": "Real macro photograph of an orb weaver spider showing striped banded legs and carapace ornamentation"
+    },
+    {
+      "category": "engineer_portrait",
+      "url": "https://images.unsplash.com/photo-1638983752157-052aa1f15bf1?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjAzMjd8MHwxfHNlYXJjaHwyfHxwb3J0cmFpdCUyMG1hbiUyMHNvZnR3YXJlJTIwZW5naW5lZXIlMjBkYXJrfGVufDB8fHx8MTc5MDE3NDY0Nnww&ixlib=rb-4.1.0&q=85",
+      "description": "Brandon D. Phillips moody dark cinematic software engineer portrait in thoughtful deep focus"
+    }
+  ],
+  "accessibility_and_testing": {
+    "required_test_ids": {
+      "homepage_web_container": "spider-web-stage",
+      "spider_entity": "orb-weaver-spider",
+      "nav_dewdrop_about": "nav-droplet-about",
+      "nav_dewdrop_projects": "nav-droplet-projects",
+      "nav_dewdrop_timeline": "nav-droplet-timeline",
+      "nav_dewdrop_skills": "nav-droplet-skills",
+      "nav_dewdrop_contact": "nav-droplet-contact",
+      "return_to_web_button": "btn-return-to-web",
+      "timeline_container": "timeline-strand-container",
+      "timeline_milestone_prefix": "timeline-item-",
+      "timeline_view_toggle": "timeline-view-toggle",
+      "project_card_prefix": "project-card-",
+      "contact_form_submit": "contact-submit-button"
+    },
+    "prefers_reduced_motion": "When user has prefers-reduced-motion enabled, replace fast pounce animation with a gentle 300ms fade transition; slow down web vibration and leg breathing to subtle static presence."
+  }
+}
