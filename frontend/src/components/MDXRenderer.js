@@ -25,6 +25,14 @@ const components = {
   tbody: (props) => <tbody {...props} />,
 };
 
+function createRequire() {
+  return (id) => {
+    if (id === "react") return React;
+    if (id === "@mdx-js/react") return { MDXProvider };
+    throw new Error(`Module not found: ${id}`);
+  };
+}
+
 export function MDXRenderer({ raw }) {
   const [Component, setComponent] = useState(null);
   const [error, setError] = useState(null);
@@ -37,15 +45,26 @@ export function MDXRenderer({ raw }) {
       jsx: true,
       jsxImportSource: "react",
       providerImportSource: "@mdx-js/react",
+      development: true,
+      format: "mdx",
     })
       .then((result) => {
-        if (mounted) {
-          try {
-            const fn = new Function("React", "return " + String(result))();
-            setComponent(fn.default || fn);
-          } catch (e) {
-            setError(e);
-          }
+        if (!mounted) return;
+        try {
+          const code = String(result);
+          const fn = new Function(
+            "React",
+            "MDXProvider",
+            "components",
+            `
+            const require = ${createRequire.toString()}();
+            ${code}
+            return typeof exports !== 'undefined' ? exports.default : exports;
+          `
+          )();
+          setComponent(fn);
+        } catch (e) {
+          setError(e);
         }
       })
       .catch((e) => {
@@ -66,7 +85,7 @@ export function MDXRenderer({ raw }) {
 
   return (
     <MDXProvider components={components}>
-      <Component />
+      <Component components={components} />
     </MDXProvider>
   );
 }
