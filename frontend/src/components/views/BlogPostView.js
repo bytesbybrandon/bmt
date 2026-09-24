@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { PageShell } from "../PageShell";
 import { getBlogPost, formatDate, readingTime } from "@/lib/blog";
+import { MDXRenderer } from "../MDXRenderer";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -77,7 +78,7 @@ export default function BlogPostView({ params }) {
           className="prose prose-neutral dark:prose-invert max-w-none"
           data-testid="blog-post-content"
         >
-          {post.body}
+          <MDXRenderer code={post.body?.code} />
         </motion.div>
 
         <footer className="mt-16 pt-8 border-t border-white/10">
