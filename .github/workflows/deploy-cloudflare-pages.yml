@@ -40,12 +40,8 @@ jobs:
           yarn build
 
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: brandonmakesthings
-          directory: frontend/build
-          branch: ${{ github.ref == 'refs/heads/main' && 'main' || github.head_ref }}
-          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
-          wranglerVersion: 'latest'
+          command: pages deploy frontend/build --project-name=brandonmakesthings
