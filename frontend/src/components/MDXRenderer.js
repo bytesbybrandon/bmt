@@ -1,37 +1,34 @@
-import { useMemo, useState, useEffect } from "react";
-import { compile } from "@mdx-js/mdx";
-import { MDXProvider } from "@mdx-js/react";
+import { useEffect, useState } from "react";
+import { evaluate } from "@mdx-js/mdx";
+import * as jsxRuntime from "react/jsx-runtime";
 
 const components = {
-  h1: (props) => <h1 className="text-3xl font-display font-light tracking-tight text-neutral-100 mb-6 mt-10" {...props} />,
-  h2: (props) => <h2 className="text-2xl font-display font-light tracking-tight text-neutral-100 mb-4 mt-8" {...props} />,
-  h3: (props) => <h3 className="text-xl font-display font-light tracking-tight text-neutral-100 mb-3 mt-6" {...props} />,
-  p: (props) => <p className="text-neutral-300 leading-relaxed mb-4" {...props} />,
-  ul: (props) => <ul className="list-disc list-inside text-neutral-300 leading-relaxed mb-4 space-y-2" {...props} />,
-  ol: (props) => <ol className="list-decimal list-inside text-neutral-300 leading-relaxed mb-4 space-y-2" {...props} />,
-  li: (props) => <li className="leading-relaxed" {...props} />,
-  a: (props) => <a className="text-amber-300 hover:text-amber-200 underline" {...props} />,
-  code: (props) => <code className="font-mono text-sm bg-white/5 px-1.5 py-0.5 rounded text-amber-200" {...props} />,
-  pre: (props) => <pre className="bg-[#030507] border border-white/10 rounded-lg p-4 overflow-x-auto mb-6" {...props} />,
-  blockquote: (props) => <blockquote className="border-l-2 border-amber-300/50 pl-4 italic text-neutral-400 my-4" {...props} />,
-  strong: (props) => <strong className="text-neutral-100" {...props} />,
-  em: (props) => <em className="italic" {...props} />,
-  hr: (props) => <hr className="border-white/10 my-8" {...props} />,
-  table: (props) => <div className="overflow-x-auto my-6"><table className="min-w-full border border-white/10" {...props} /></div>,
-  th: (props) => <th className="border border-white/10 px-3 py-2 font-mono text-xs uppercase tracking-[0.2em] bg-white/5 text-neutral-300" {...props} />,
-  td: (props) => <td className="border border-white/10 px-3 py-2 text-neutral-300" {...props} />,
+  h1: (props) => <h1 {...props} className="mb-6 mt-10 font-display text-3xl font-light tracking-tight text-neutral-100" />,
+  h2: (props) => <h2 {...props} className="mb-4 mt-8 font-display text-2xl font-light tracking-tight text-neutral-100" />,
+  h3: (props) => <h3 {...props} className="mb-3 mt-6 font-display text-xl font-light tracking-tight text-neutral-100" />,
+  p: (props) => <p {...props} className="mb-4 leading-relaxed text-neutral-300" />,
+  ul: (props) => <ul {...props} className="mb-4 list-inside list-disc space-y-2 leading-relaxed text-neutral-300" />,
+  ol: (props) => <ol {...props} className="mb-4 list-inside list-decimal space-y-2 leading-relaxed text-neutral-300" />,
+  li: (props) => <li {...props} className="leading-relaxed" />,
+  a: (props) => <a {...props} className="text-amber-300 underline hover:text-amber-200" />,
+  code: ({ className, ...props }) => (
+    <code
+      {...props}
+      className={`mdx-inline-code rounded bg-white/5 px-1.5 py-0.5 font-mono text-sm text-amber-200 ${className || ""}`}
+    />
+  ),
+  pre: (props) => <pre {...props} className="mdx-code-block mb-6 overflow-x-auto rounded-lg border border-white/10 bg-[#030507] p-4" />,
+  blockquote: (props) => <blockquote {...props} className="my-4 border-l-2 border-amber-300/50 pl-4 italic text-neutral-400" />,
+  strong: (props) => <strong {...props} className="text-neutral-100" />,
+  em: (props) => <em {...props} className="italic" />,
+  hr: (props) => <hr {...props} className="my-8 border-white/10" />,
+  table: (props) => <div className="my-6 overflow-x-auto"><table {...props} className="min-w-full border border-white/10" /></div>,
+  th: (props) => <th {...props} className="border border-white/10 bg-white/5 px-3 py-2 font-mono text-xs uppercase tracking-[0.2em] text-neutral-300" />,
+  td: (props) => <td {...props} className="border border-white/10 px-3 py-2 text-neutral-300" />,
   tr: (props) => <tr {...props} />,
   thead: (props) => <thead {...props} />,
   tbody: (props) => <tbody {...props} />,
 };
-
-function createRequire() {
-  return (id) => {
-    if (id === "react") return React;
-    if (id === "@mdx-js/react") return { MDXProvider };
-    throw new Error(`Module not found: ${id}`);
-  };
-}
 
 export function MDXRenderer({ raw }) {
   const [Component, setComponent] = useState(null);
@@ -40,32 +37,13 @@ export function MDXRenderer({ raw }) {
   useEffect(() => {
     if (!raw) return;
     let mounted = true;
+    setComponent(null);
+    setError(null);
 
-    compile(raw, {
-      jsx: true,
-      jsxImportSource: "react",
-      providerImportSource: "@mdx-js/react",
-      development: true,
-      format: "mdx",
-    })
-      .then((result) => {
+    evaluate(raw, { ...jsxRuntime, development: false })
+      .then(({ default: MDXContent }) => {
         if (!mounted) return;
-        try {
-          const code = String(result);
-          const fn = new Function(
-            "React",
-            "MDXProvider",
-            "components",
-            `
-            const require = ${createRequire.toString()}();
-            ${code}
-            return typeof exports !== 'undefined' ? exports.default : exports;
-          `
-          )();
-          setComponent(fn);
-        } catch (e) {
-          setError(e);
-        }
+        setComponent(() => MDXContent);
       })
       .catch((e) => {
         if (mounted) setError(e);
@@ -83,9 +61,5 @@ export function MDXRenderer({ raw }) {
     return <div className="text-neutral-500 animate-pulse">Rendering...</div>;
   }
 
-  return (
-    <MDXProvider components={components}>
-      <Component components={components} />
-    </MDXProvider>
-  );
+  return <Component components={components} />;
 }

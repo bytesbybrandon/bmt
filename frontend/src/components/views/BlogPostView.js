@@ -10,16 +10,17 @@ const fadeUp = {
   transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
 };
 
-export default function BlogPostView({ params }) {
+export default function BlogPostView({ params, onNavigate }) {
   const { slug } = params;
   const post = getBlogPost(slug);
+  const returnToBlog = () => onNavigate("blog");
 
   if (!post) {
     return (
       <PageShell
         testid="blog-post-not-found"
         eyebrow="06 — Silk Threads"
-        onBack={() => window.history.back()}
+        onBack={returnToBlog}
         titleLines={[
           { text: "Thread Not Found", className: "font-display text-4xl sm:text-5xl font-light tracking-tight text-neutral-100" },
         ]}
@@ -33,9 +34,13 @@ export default function BlogPostView({ params }) {
             This thread doesn't exist or has been cut.
           </p>
           <p className="mt-4 font-mono text-xs text-neutral-500">
-            <a href="/blog" className="text-amber-300 hover:text-amber-200 underline">
+            <button
+              type="button"
+              onClick={returnToBlog}
+              className="text-amber-300 underline hover:text-amber-200"
+            >
               Return to the web
-            </a>
+            </button>
           </p>
         </motion.div>
       </PageShell>
@@ -46,7 +51,7 @@ export default function BlogPostView({ params }) {
     <PageShell
       testid="blog-post-view"
       eyebrow="06 — Silk Threads"
-      onBack={() => window.history.back()}
+      onBack={returnToBlog}
       titleLines={[
         {
           text: post.title,
@@ -78,7 +83,7 @@ export default function BlogPostView({ params }) {
           className="prose prose-neutral dark:prose-invert max-w-none"
           data-testid="blog-post-content"
         >
-          <MDXRenderer code={post.body?.code} />
+          <MDXRenderer raw={post.body?.raw} />
         </motion.div>
 
         <footer className="mt-16 pt-8 border-t border-white/10">

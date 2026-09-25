@@ -8,6 +8,7 @@ import { NightSkyBackground } from "@/components/NightSkyBackground";
 import { CustomCursor } from "@/components/CustomCursor";
 import { SoundToggle } from "@/components/SoundToggle";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { CobwebNav } from "@/components/CobwebNav";
 import { HomeScene } from "@/components/HomeScene";
 import AboutView from "@/components/views/AboutView";
 import ProjectsView from "@/components/views/ProjectsView";
@@ -78,9 +79,18 @@ function App() {
         {view === "timeline" && <TimelineView key="timeline" onBack={back} />}
         {view === "skills" && <SkillsView key="skills" onBack={back} />}
         {view === "contact" && <ContactView key="contact" onBack={back} />}
-        {view === "blog" && <BlogView key="blog" onBack={back} />}
-        {view === "blog-post" && <BlogPostView key={`blog-post-${viewParams?.slug}`} params={viewParams} />}
+        {view === "blog" && <BlogView key="blog" onBack={back} onNavigate={navigate} />}
+        {view === "blog-post" && (
+          <BlogPostView
+            key={`blog-post-${viewParams?.slug}`}
+            params={viewParams}
+            onNavigate={navigate}
+          />
+        )}
       </AnimatePresence>
+      {view !== "home" && (
+        <CobwebNav currentView={view} onNavigate={navigate} />
+      )}
     </div>
   );
 }

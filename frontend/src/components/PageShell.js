@@ -28,7 +28,7 @@ export const PageShell = ({ eyebrow, titleLines, children, onBack, testid }) => 
     data-testid={testid}
   >
     <ReturnDropletButton onClick={onBack} />
-    <div className="fixed right-6 top-8 z-40 font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-400 md:right-10">
+    <div className="fixed right-6 top-20 z-40 font-mono text-[10px] uppercase tracking-[0.3em] text-neutral-400 md:right-10">
       {eyebrow}
     </div>
     <main className="mx-auto w-full max-w-6xl px-6 pb-32 pt-32 md:px-10 md:pt-40">

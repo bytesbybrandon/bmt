@@ -39,34 +39,40 @@ export default function BlogView({ onBack, onNavigate }) {
             key={post.slug}
             {...fadeUp}
             transition={{ delay: i * 0.08 }}
-            className="group relative border border-white/10 bg-[#050709]/50 hover:border-amber-300/30 transition-all duration-500 p-8 cursor-pointer"
+            className="relative"
             data-testid={`blog-post-${post.slug}`}
-            onClick={() => handlePostClick(post.slug)}
           >
-            <div className="mb-4 flex flex-wrap gap-2">
-              {post.tags?.map((tag) => (
-                <span
-                  key={tag}
-                  className="font-mono text-[9px] uppercase tracking-[0.2em] px-2 py-1 bg-white/5 border border-white/10 text-neutral-400 hover:text-amber-300 hover:border-amber-300/30 transition-colors"
-                >
-                  {tag}
+            <button
+              type="button"
+              className="blog-post-card group block w-full rounded-none border border-white/10 bg-[#050709]/50 p-8 text-left transition-all duration-500 hover:border-amber-300/30 focus-visible:outline-offset-4"
+              aria-label={`Read ${post.title}`}
+              onClick={() => handlePostClick(post.slug)}
+            >
+              <div className="mb-4 flex flex-wrap gap-2">
+                {post.tags?.map((tag) => (
+                  <span
+                    key={tag}
+                    className="blog-post-tag border border-white/10 bg-white/5 px-2 py-1 font-mono text-[9px] uppercase tracking-[0.2em] text-neutral-400 transition-colors hover:border-amber-300/30 hover:text-amber-300"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+              <h2 className="mb-3 font-display text-xl font-normal leading-snug text-neutral-100 transition-colors group-hover:text-amber-200">
+                {post.title}
+              </h2>
+              <p className="mb-4 line-clamp-3 text-sm font-light text-neutral-400">
+                {post.summary}
+              </p>
+              <div className="flex items-center justify-between border-t border-white/5 pt-4">
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
+                  {formatDate(post.date)}
                 </span>
-              ))}
-            </div>
-            <h2 className="font-display text-xl font-normal text-neutral-100 group-hover:text-amber-200 transition-colors mb-3 leading-snug">
-              {post.title}
-            </h2>
-            <p className="font-light text-sm text-neutral-400 mb-4 line-clamp-3">
-              {post.summary}
-            </p>
-            <div className="flex items-center justify-between pt-4 border-t border-white/5">
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
-                {formatDate(post.date)}
-              </span>
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
-                {readingTime(post.body?.raw || '')} min read
-              </span>
-            </div>
+                <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
+                  {readingTime(post.body?.raw || '')} min read
+                </span>
+              </div>
+            </button>
           </motion.article>
         ))}
       </div>

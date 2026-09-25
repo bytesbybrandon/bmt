@@ -183,3 +183,48 @@ body {
 [data-theme="day"] .text-neutral-500,
 [data-theme="day"] .text-neutral-600 { text-shadow: 0 1px 10px rgba(255, 252, 244, 0.65); }
 [data-theme="day"] .grain-overlay { opacity: 0.035; }
+
+/* Keep shared component tokens legible when Day or light Auto Sky is active. */
+[data-theme="day"] {
+    --background: 42 20% 91%;
+    --foreground: 220 13% 16%;
+    --card: 42 24% 96%;
+    --card-foreground: 220 13% 16%;
+    --popover: 42 24% 96%;
+    --popover-foreground: 220 13% 16%;
+    --primary: 28 74% 36%;
+    --primary-foreground: 40 33% 98%;
+    --secondary: 38 22% 86%;
+    --secondary-foreground: 220 13% 18%;
+    --muted: 38 18% 86%;
+    --muted-foreground: 218 12% 34%;
+    --accent: 34 40% 86%;
+    --accent-foreground: 220 13% 18%;
+    --border: 220 12% 74%;
+    --input: 220 12% 74%;
+    --ring: 28 74% 36%;
+}
+
+[data-theme="day"] .text-amber-300,
+[data-theme="day"] .text-amber-300\/80,
+[data-theme="day"] .text-amber-300\/70,
+[data-theme="day"] .text-amber-200,
+[data-theme="day"] .text-amber-200\/80,
+[data-theme="day"] .text-amber-200\/70,
+[data-theme="day"] .text-amber-200\/60,
+[data-theme="day"] .text-amber-200\/50,
+[data-theme="day"] .text-amber-100 {
+    color: #70400b;
+}
+
+[data-theme="day"] .hover\:text-amber-300:hover,
+[data-theme="day"] .hover\:text-amber-200:hover,
+[data-theme="day"] .hover\:text-amber-100:hover,
+[data-theme="day"] .group:hover .group-hover\:text-amber-200,
+[data-theme="day"] .group:hover .group-hover\:text-amber-100 {
+    color: #5e3508;
+}
+
+[data-theme="day"] .group:hover .group-hover\:text-white {
+    color: #14181e;
+}
