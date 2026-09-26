@@ -1,7 +1,6 @@
 import { motion } from "framer-motion";
 import { PageShell } from "../PageShell";
 import { getBlogPosts, formatDate, readingTime } from "@/lib/blog";
-import { format } from "date-fns";
 
 const fadeUp = {
   initial: { opacity: 0, y: 24 },
@@ -33,22 +32,22 @@ export default function BlogView({ onBack, onNavigate }) {
         },
       ]}
     >
-      <div className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+      <div className="mt-16 grid auto-rows-fr gap-12 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post, i) => (
           <motion.article
             key={post.slug}
             {...fadeUp}
             transition={{ delay: i * 0.08 }}
-            className="relative"
+            className="relative h-full"
             data-testid={`blog-post-${post.slug}`}
           >
             <button
               type="button"
-              className="blog-post-card group block w-full rounded-none border border-white/10 bg-[#050709]/50 p-8 text-left transition-all duration-500 hover:border-amber-300/30 focus-visible:outline-offset-4"
+              className="blog-post-card group flex h-full min-h-[18rem] w-full flex-col rounded-none border border-white/10 bg-[#050709]/50 p-8 text-left transition-all duration-500 hover:border-amber-300/30 focus-visible:outline-offset-4"
               aria-label={`Read ${post.title}`}
               onClick={() => handlePostClick(post.slug)}
             >
-              <div className="mb-4 flex flex-wrap gap-2">
+              <div className="mb-4 flex min-h-8 flex-wrap content-start gap-2">
                 {post.tags?.map((tag) => (
                   <span
                     key={tag}
@@ -58,13 +57,13 @@ export default function BlogView({ onBack, onNavigate }) {
                   </span>
                 ))}
               </div>
-              <h2 className="mb-3 font-display text-xl font-normal leading-snug text-neutral-100 transition-colors group-hover:text-amber-200">
+              <h2 className="mb-3 line-clamp-2 min-h-14 font-display text-xl font-normal leading-snug text-neutral-100 transition-colors group-hover:text-amber-200">
                 {post.title}
               </h2>
-              <p className="mb-4 line-clamp-3 text-sm font-light text-neutral-400">
+              <p className="mb-4 line-clamp-3 min-h-[4.5rem] text-sm font-light text-neutral-400">
                 {post.summary}
               </p>
-              <div className="flex items-center justify-between border-t border-white/5 pt-4">
+              <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
                 <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500">
                   {formatDate(post.date)}
                 </span>

@@ -1,0 +1,101 @@
+---
+title: "Reactive Skills: A Runtime for Agent Skills"
+date: "2026-09-25"
+tags: ["agent-skills", "state-machines", "open-source"]
+summary: "Reactive Skills adds explicit workflow state, guarded transitions, and durable event history to human-readable agent skills."
+draft: false
+---
+
+Standard agent skills make practical knowledge portable.
+A `SKILL.md` can explain how to approach a task, which tools to use, and which conventions to follow.
+
+That format works well for packaging guidance.
+It does not, by itself, define an execution contract for a workflow that spans many turns, tools, and interruptions.
+
+For those workflows, the agent still has to figure out which phase comes next, whether the work is complete, what evidence counts as completion, and what should happen when a tool fails.
+
+Reactive Skills Architecture (RSA) builds on the standard skill format.
+It keeps instructions human-readable, then adds explicit state, signals, guards, and durable event history around them.
+
+```text
+skills/<skill-name>/
+├── skill.yaml            # States, transitions, and guards
+├── STATECHART.md         # Mermaid statechart diagram
+├── SKILL.md              # Skill entry point and runtime bootloader
+├── states/               # Prompt templates for individual states
+│   ├── state_1.md
+│   ├── ...
+│   └── state_n.md
+└── skill-release.json    # Release and schema metadata
+```
+
+## From instructions to execution state
+
+A workflow might move through `PLAN`, `IMPLEMENT`, `VERIFY`, and `DELIVER`.
+At each step, the agent can load the active state's prompt and allowed tools instead of carrying every instruction for every phase into the turn.
+
+Typed signals tell the runtime that something happened.
+Guards decide whether the matching transition is valid.
+
+```yaml
+TESTS_PASSED:
+  target: DELIVER
+  guard: "event.payload.exit_code === 0"
+```
+
+The runtime evaluates the guard against the event before it advances the workflow.
+For this example, that means the event must contain a successful exit code.
+To make that evidence trustworthy, connect the signal to the test runner or another source you trust.
+
+Hierarchical state machines also let related states share behavior.
+If a leaf state does not handle an event, the event can bubble to an ancestor state that does.
+
+Loading only the active prompt slice can reduce the instructions sent on a turn.
+The [project README](https://github.com/Reactive-Skills/reactive-skills) currently estimates about a 70% token reduction for its setup, but the actual savings depend on the skill and the comparison baseline.
+
+## Standard skills still matter
+
+RSA does not replace standard agent skills.
+Markdown remains a practical way to package procedures, domain knowledge, tool guidance, and team conventions.
+
+The difference is the runtime contract.
+A standard skill describes what an agent should do.
+A reactive skill also records where the workflow is, which transitions are available, and what conditions must hold before it can move forward.
+
+For a small, short-lived task, a standard skill may be all you need.
+For a multi-step engineering workflow, migration, review process, or release procedure, explicit state makes progress easier to inspect, verify, and resume.
+
+## When a check needs judgment
+
+Many workflow checks are deterministic.
+A test process either exits successfully or it does not.
+
+Other checks are semantic.
+For example, deciding whether a generated summary accurately reflects a code change is not just an exit-code check.
+
+RSA can use optional typed judgment integrations, including [Jev](https://thejevai.com/docs) through TypeSafe AI, for bounded decisions like these.
+The judgment can inform a guard, while the runtime remains responsible for applying the workflow's rules and choosing the next state.
+
+## Evidence instead of conversation memory
+
+RSA records signals and state changes in an append-only event history backed by JSONL and SQLite.
+Deliverables such as verification reports or review summaries can be rendered from that history.
+
+That gives the workflow a durable record of what happened and why a transition was allowed.
+The next turn does not have to rely only on what the agent remembers from an earlier conversation.
+
+## Use the right layer
+
+Use a standard skill when the task is small, short-lived, and mainly needs guidance.
+Use RSA when a workflow needs explicit phases, controlled transitions, verification, recovery, or resumability.
+Use a semantic judgment integration when a bounded decision cannot be expressed through ordinary programmatic checks.
+
+Skills provide knowledge.
+State machines provide execution structure.
+Guards enforce transition rules.
+Event history provides evidence.
+
+Reactive Skills gives agent skills a runtime while keeping the instructions readable and reusable.
+
+Explore the [Reactive Skills Architecture repository](https://github.com/Reactive-Skills/reactive-skills).
+The runtime and AXI packages are available on npm as [`@reactive-skills/runtime`](https://www.npmjs.com/package/@reactive-skills/runtime) and [`@reactive-skills/axi`](https://www.npmjs.com/package/@reactive-skills/axi).
