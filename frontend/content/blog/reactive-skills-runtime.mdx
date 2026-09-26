@@ -17,6 +17,8 @@ For those workflows, the agent still has to figure out which phase comes next, w
 Reactive Skills Architecture (RSA) builds on the standard skill format.
 It keeps instructions human-readable, then adds explicit state, signals, guards, and durable event history around them.
 
+![Reactive Skills infographic covering skills, states, signals, guards, event history, deliverables, and runtime integrations](/assets/reactive-skills-infographic.png)
+
 ```text
 skills/<skill-name>/
 ├── skill.yaml            # States, transitions, and guards
@@ -49,6 +51,11 @@ To make that evidence trustworthy, connect the signal to the test runner or anot
 
 Hierarchical state machines also let related states share behavior.
 If a leaf state does not handle an event, the event can bubble to an ancestor state that does.
+
+The simulator makes the active state, guard, signal, and event ledger visible together.
+This capture shows the linear FSM mode, with the hierarchical mode selector visible above it.
+
+![Reactive Skills runtime simulator showing the active EXECUTE state, guard, signal dispatch, and append-only event ledger](/assets/reactive-skills-simulator.png)
 
 Loading only the active prompt slice can reduce the instructions sent on a turn.
 The [project README](https://github.com/Reactive-Skills/reactive-skills) currently estimates about a 70% token reduction for its setup, but the actual savings depend on the skill and the comparison baseline.

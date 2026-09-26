@@ -7,6 +7,14 @@ const components = {
   h2: (props) => <h2 {...props} className="mb-4 mt-8 font-display text-2xl font-light tracking-tight text-neutral-100" />,
   h3: (props) => <h3 {...props} className="mb-3 mt-6 font-display text-xl font-light tracking-tight text-neutral-100" />,
   p: (props) => <p {...props} className="mb-4 leading-relaxed text-neutral-300" />,
+  img: (props) => (
+    <img
+      {...props}
+      loading="lazy"
+      decoding="async"
+      className="mx-auto my-8 block h-auto max-w-full"
+    />
+  ),
   ul: (props) => <ul {...props} className="mb-4 list-inside list-disc space-y-2 leading-relaxed text-neutral-300" />,
   ol: (props) => <ol {...props} className="mb-4 list-inside list-decimal space-y-2 leading-relaxed text-neutral-300" />,
   li: (props) => <li {...props} className="leading-relaxed" />,
